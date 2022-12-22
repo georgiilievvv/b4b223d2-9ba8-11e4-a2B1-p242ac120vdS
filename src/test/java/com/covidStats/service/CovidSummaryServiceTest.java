@@ -1,5 +1,6 @@
 package com.covidStats.service;
 
+import com.covidStats.BaseUnitTest;
 import com.covidStats.dto.CountryCovidStatisticsDto;
 import com.covidStats.entity.CountryCovidStatisticsEntity;
 import com.covidStats.repository.CovidSummaryRepository;
@@ -8,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.modelmapper.ModelMapper;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
@@ -21,19 +21,15 @@ import static org.mockito.Mockito.*;
 /**
  * Unit tests for {@link CovidSummaryService}
  */
-@SpringBootTest
-class CovidSummaryServiceTest {
+class CovidSummaryServiceTest extends BaseUnitTest {
     private static final String BG_COUNTY_CODE = "BG";
-
 
     @InjectMocks
     private CovidSummaryService service;
-
     @Mock
     private CovidSummaryRepository repository;
     @Mock
     private ModelMapper mapper;
-
     @Mock
     private CountryCovidStatisticsDto dto1;
     @Mock
@@ -44,7 +40,7 @@ class CovidSummaryServiceTest {
     private CountryCovidStatisticsEntity entity2;
 
     private static List<CountryCovidStatisticsDto> dtoList;
-    private static List<CountryCovidStatisticsEntity> entityList ;
+    private static List<CountryCovidStatisticsEntity> entityList;
 
     @BeforeEach
     void beforeAll() {
@@ -58,9 +54,8 @@ class CovidSummaryServiceTest {
 
         assertThrows(IllegalArgumentException.class, () -> service.saveAll(dtoList));
 
-        verify(repository, never()).saveAll(any());
         verify(mapper).map(eq(dto1), eq(CountryCovidStatisticsEntity.class));
-        verify(mapper, never()).map(eq(dto2), eq(CountryCovidStatisticsEntity.class));
+        verify(repository, never()).saveAll(anyCollection());
     }
 
     @Test
@@ -95,6 +90,6 @@ class CovidSummaryServiceTest {
 
         assertEquals(exception.getMessage(), BG_COUNTY_CODE);
         verify(repository).findById(eq(BG_COUNTY_CODE));
-        verify(mapper, never());
+        verify(mapper, never()).map(anyString(), any());
     }
 }

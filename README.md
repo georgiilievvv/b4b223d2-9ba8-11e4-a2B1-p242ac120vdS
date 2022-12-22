@@ -23,5 +23,5 @@ updated with a scheduled task.
  - run image form docker hub `docker run -d -p 8080:8080 georgiilievvv/covid-statistics-app`
 
 ### Endpoints
-- GET `/country/{COUNTRYCODE}` - list covid statistics for a particular country by providing
-- a two-letter country code as a path parameter. (eg. https://localhost:8080/country/BG)
+ - GET `/country/{COUNTRYCODE}` - list covid statistics for a particular country by providing
+ - a two-letter country code as a path parameter. (eg. https://localhost:8080/country/BG)

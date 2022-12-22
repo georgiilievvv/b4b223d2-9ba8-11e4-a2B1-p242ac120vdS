@@ -19,7 +19,7 @@ import javax.persistence.EntityNotFoundException;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-public class CountryController {
+public class CountryCovidStatisticsController {
     private final CovidSummaryService covidSummaryService;
 
     @GetMapping("country/{countryCode}")

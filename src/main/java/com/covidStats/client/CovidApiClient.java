@@ -1,6 +1,7 @@
 package com.covidStats.client;
 
 import com.covidStats.dto.CovidSummaryWrapper;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.MissingRequiredPropertiesException;
 import org.springframework.retry.annotation.Backoff;
@@ -13,8 +14,9 @@ import org.springframework.web.client.RestTemplate;
  */
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class CovidApiClient {
-    private final RestTemplate restTemplate = new RestTemplate();
+    private final RestTemplate restTemplate;
     private static final String COVID_SUMMARY_URL = "https://api.covid19api.com/summary";
 
     /**
@@ -26,7 +28,7 @@ public class CovidApiClient {
     @Retryable(maxAttempts=60, value = Exception.class,
             backoff = @Backoff(delay = 10000))
     public CovidSummaryWrapper fetchCovidSummary() {
-        log.info("action=fetchCovidSummary ulr={}", COVID_SUMMARY_URL);
+        log.info("action=fetchCovidSummary url={}", COVID_SUMMARY_URL);
 
         CovidSummaryWrapper covidSummaryWrapper = restTemplate
                 .getForEntity(COVID_SUMMARY_URL, CovidSummaryWrapper.class)
