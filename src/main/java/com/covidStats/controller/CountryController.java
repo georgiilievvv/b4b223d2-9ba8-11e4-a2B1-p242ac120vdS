@@ -3,6 +3,7 @@ package com.covidStats.controller;
 import com.covidStats.dto.CountryCovidStatisticsDto;
 import com.covidStats.service.CovidSummaryService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,7 @@ import javax.persistence.EntityNotFoundException;
  * Controller class responsible for processing incoming REST API
  * requests for covid related statistics by country.
  */
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 public class CountryController {
@@ -27,7 +29,8 @@ public class CountryController {
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity entityNotFoundExceptionHandler() {
+    public ResponseEntity entityNotFoundExceptionHandler(EntityNotFoundException e) {
+        log.error("action=entityNotFoundExceptionHandler result=error id={}", e.getMessage());
         return ResponseEntity.notFound().build();
     }
 }
