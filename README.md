@@ -1,6 +1,9 @@
 # Covid Stats Application
 
 
+### Endpoints
+ - GET `/country/{COUNTRYCODE}` - list covid statistics for a particular country by providing 
+ - a two-letter country code as a path parameter. (eg. https://localhost:8080/country/BG)
 
 ### Build the project using Maven:
  - build the project using Maven - `mvn clean install`
